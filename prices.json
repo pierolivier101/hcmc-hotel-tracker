@@ -1,0 +1,212 @@
+[
+    {
+        "name": "CARAVELLE SAIGON",
+        "price": 115,
+        "trend": "DOWN",
+        "diff": -15,
+        "type": "hotel"
+    },
+    {
+        "name": "REX HOTEL",
+        "price": 75,
+        "trend": "UP",
+        "diff": 5,
+        "type": "hotel"
+    },
+    {
+        "name": "PARK HYATT SAIGON",
+        "price": 290,
+        "trend": "DOWN",
+        "diff": -5,
+        "type": "hotel"
+    },
+    {
+        "name": "THE REVERIE SAIGON",
+        "price": 350,
+        "trend": "UP",
+        "diff": 20,
+        "type": "hotel"
+    },
+    {
+        "name": "HOTEL MAJESTIC",
+        "price": 125,
+        "trend": "DOWN",
+        "diff": -20,
+        "type": "hotel"
+    },
+    {
+        "name": "INTERCONTINENTAL",
+        "price": 235,
+        "trend": "FLAT",
+        "diff": 0,
+        "type": "hotel"
+    },
+    {
+        "name": "SOFITEL SAIGON",
+        "price": 220,
+        "trend": "UP",
+        "diff": 5,
+        "type": "hotel"
+    },
+    {
+        "name": "PULLMAN SAIGON",
+        "price": 190,
+        "trend": "UP",
+        "diff": 15,
+        "type": "hotel"
+    },
+    {
+        "name": "NEW WORLD HOTEL",
+        "price": 115,
+        "trend": "DOWN",
+        "diff": -5,
+        "type": "hotel"
+    },
+    {
+        "name": "LOTTE HOTEL SAIGON",
+        "price": 60,
+        "trend": "FLAT",
+        "diff": 0,
+        "type": "hotel"
+    },
+    {
+        "name": "GRAND HOTEL SAIGON",
+        "price": 100,
+        "trend": "DOWN",
+        "diff": -20,
+        "type": "hotel"
+    },
+    {
+        "name": "THE MYST DONG KHOI",
+        "price": 100,
+        "trend": "UP",
+        "diff": 10,
+        "type": "hotel"
+    },
+    {
+        "name": "LIBERTY CENTRAL",
+        "price": 110,
+        "trend": "UP",
+        "diff": 10,
+        "type": "hotel"
+    },
+    {
+        "name": "SILVERLAND YEN",
+        "price": 85,
+        "trend": "DOWN",
+        "diff": -15,
+        "type": "hotel"
+    },
+    {
+        "name": "FUSION ORIGINAL",
+        "price": 190,
+        "trend": "UP",
+        "diff": 5,
+        "type": "hotel"
+    },
+    {
+        "name": "HOTEL DES ARTS",
+        "price": 225,
+        "trend": "FLAT",
+        "diff": 0,
+        "type": "hotel"
+    },
+    {
+        "name": "MAI HOUSE SAIGON",
+        "price": 140,
+        "trend": "DOWN",
+        "diff": -15,
+        "type": "hotel"
+    },
+    {
+        "name": "RENAISSANCE RIVERSDE",
+        "price": 130,
+        "trend": "DOWN",
+        "diff": -5,
+        "type": "hotel"
+    },
+    {
+        "name": "SHERATON SAIGON",
+        "price": 185,
+        "trend": "UP",
+        "diff": 15,
+        "type": "hotel"
+    },
+    {
+        "name": "LE MERIDIEN SAIGON",
+        "price": 75,
+        "trend": "DOWN",
+        "diff": -15,
+        "type": "hotel"
+    },
+    {
+        "name": "SOMERSET CHANCELLOR",
+        "price": 145,
+        "trend": "FLAT",
+        "diff": 0,
+        "type": "apartment"
+    },
+    {
+        "name": "SOMERSET HCMC",
+        "price": 150,
+        "trend": "UP",
+        "diff": 20,
+        "type": "apartment"
+    },
+    {
+        "name": "ASCOTT WATERFRONT",
+        "price": 225,
+        "trend": "DOWN",
+        "diff": -20,
+        "type": "apartment"
+    },
+    {
+        "name": "OAKWOOD RESIDENCE",
+        "price": 145,
+        "trend": "DOWN",
+        "diff": -15,
+        "type": "apartment"
+    },
+    {
+        "name": "SEDONA SUITES",
+        "price": 175,
+        "trend": "FLAT",
+        "diff": 0,
+        "type": "apartment"
+    },
+    {
+        "name": "SHERWOOD RESIDENCE",
+        "price": 155,
+        "trend": "UP",
+        "diff": 20,
+        "type": "apartment"
+    },
+    {
+        "name": "SILA URBAN LIVING",
+        "price": 140,
+        "trend": "DOWN",
+        "diff": -15,
+        "type": "apartment"
+    },
+    {
+        "name": "INTERCON RESIDENCES",
+        "price": 160,
+        "trend": "DOWN",
+        "diff": -5,
+        "type": "apartment"
+    },
+    {
+        "name": "CAPRI BY FRASER",
+        "price": 175,
+        "trend": "UP",
+        "diff": 15,
+        "type": "apartment"
+    },
+    {
+        "name": "SAIGON DOMAINE",
+        "price": 125,
+        "trend": "UP",
+        "diff": 10,
+        "type": "apartment"
+    }
+]

@@ -1,0 +1,188 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@400;600&display=swap');
+
+body {
+    background: radial-gradient(circle at 50% 0%, #111a22, #06080b 80%);
+    color: #e6edf3;
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: auto;
+    padding: 40px 0;
+}
+
+.board-container {
+    background: rgba(18, 22, 30, 0.6);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 30px 50px 50px;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.8), inset 0 0 40px rgba(0,0,0,0.5);
+    width: 950px;
+    position: relative;
+    overflow: hidden;
+}
+
+.board-container::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, transparent, #00f0ff, #0051ff, transparent);
+    opacity: 0.8;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 40px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 20px;
+}
+
+header h1 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 3rem;
+    margin: 0;
+    background: linear-gradient(135deg, #f0b830, #ff8c00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    text-shadow: 0 5px 15px rgba(240, 184, 48, 0.3);
+}
+
+header h2 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #8b949e;
+    margin: 10px 0 0 0;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+
+header h2 span {
+    color: #00f0ff;
+    padding-left: 10px;
+    text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+}
+
+.subtitle-desc {
+    font-family: 'Inter', sans-serif;
+    color: #00f0ff;
+    font-size: 0.85rem;
+    margin-top: 15px;
+    margin-bottom: 0;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 0 0 8px rgba(0, 240, 255, 0.3);
+}
+
+.section-title {
+    font-family: 'Oswald', sans-serif;
+    color: #e6edf3;
+    font-size: 1.5rem;
+    margin: 30px 0 10px 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-shadow: 0 2px 5px rgba(0, 240, 255, 0.3);
+}
+
+.board-header {
+    display: flex;
+    color: #6e7681;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    padding: 0 10px;
+    letter-spacing: 2px;
+}
+
+.col-name { flex: 0 0 45%; }
+.col-price { justify-content: flex-end; flex: 0 0 15%; text-align: right; }
+.col-trend { flex: 0 0 20%; text-align: center; }
+.col-diff { flex: 0 0 20%; text-align: right; }
+
+.board {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.row {
+    display: flex;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 8px 12px;
+    border-radius: 8px;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.row:hover {
+    transform: scale(1.02);
+    background: rgba(0, 0, 0, 0.6);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.word {
+    display: flex;
+    gap: 3px;
+}
+
+.flap {
+    width: 25px;
+    height: 40px;
+    background: linear-gradient(180deg, #181d24 0%, #0d1117 100%);
+    color: #e6edf3;
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    position: relative;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255,255,255,0.1);
+    border: 1px solid #000;
+    overflow: hidden;
+    perspective: 200px;
+}
+
+/* Simulated split line */
+.flap::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: #000;
+    transform: translateY(-50%);
+    z-index: 10;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.1);
+}
+
+.up .flap { 
+    color: #39ff14; 
+    text-shadow: 0 0 6px rgba(57, 255, 20, 0.4);
+}
+.down .flap { 
+    color: #ff073a;
+    text-shadow: 0 0 6px rgba(255, 7, 58, 0.4);
+}
+.flat .flap { 
+    color: #8b949e; 
+}
+
+.type-hotel .flap {
+    color: #39ff14; /* Green */
+    text-shadow: 0 0 6px rgba(57, 255, 20, 0.4);
+}
+
+.type-apartment .flap {
+    color: #00f0ff; /* Blue */
+    text-shadow: 0 0 6px rgba(0, 240, 255, 0.4);
+}
