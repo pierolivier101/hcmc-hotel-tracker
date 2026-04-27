@@ -72,6 +72,47 @@ def update_prices():
             except:
                 pass
                 
+    # Load history for 7-day average
+    HISTORY_FILE = "history.json"
+    history = []
+    if os.path.exists(HISTORY_FILE):
+        with open(HISTORY_FILE, "r") as f:
+            try:
+                history = json.load(f)
+            except:
+                pass
+                
+    today_str = datetime.now().strftime('%Y-%m-%d')
+    hist_past = [entry for entry in history if entry.get("date") != today_str]
+    hist_past.sort(key=lambda x: x["date"])
+    # We need 14 days of history
+    last_14_days = hist_past[-14:]
+    
+    # Split into prev 7 days and recent 7 days
+    if len(last_14_days) > 7:
+        prev_7_days = last_14_days[:-7]
+        recent_7_days = last_14_days[-7:]
+    else:
+        # Not enough history for a true comparison, just use what we have
+        prev_7_days = []
+        recent_7_days = last_14_days
+        
+    def get_averages(day_list):
+        avg_dict = {}
+        if not day_list: return avg_dict
+        counts = {}
+        for entry in day_list:
+            for prop in entry["data"]:
+                name = prop["name"]
+                avg_dict[name] = avg_dict.get(name, 0) + prop["price"]
+                counts[name] = counts.get(name, 0) + 1
+        for name in avg_dict:
+            avg_dict[name] /= counts[name]
+        return avg_dict
+        
+    avg_prev = get_averages(prev_7_days)
+    avg_recent = get_averages(recent_7_days)
+                
     new_data = []
     
     # Base starting prices if no history (Price per night for standard double)
@@ -125,6 +166,11 @@ def update_prices():
         old_price = prev_data.get(item, current_price)
         diff = current_price - old_price
         
+        # Calculate Weekly Variance (Average of recent 7 days - Average of previous 7 days)
+        avg_rec_price = avg_recent.get(item, current_price)
+        avg_prv_price = avg_prev.get(item, avg_rec_price) 
+        diff_7d = avg_rec_price - avg_prv_price
+        
         trend = "FLAT"
         if diff > 0:
             trend = "UP"
@@ -136,6 +182,7 @@ def update_prices():
             "price": current_price,
             "trend": trend,
             "diff": diff,
+            "diff_7d": round(diff_7d),
             "type": item_type
         })
         

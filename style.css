@@ -21,9 +21,10 @@ body {
     border-radius: 16px;
     padding: 30px 50px 50px;
     box-shadow: 0 40px 80px rgba(0,0,0,0.8), inset 0 0 40px rgba(0,0,0,0.5);
-    width: 950px;
+    width: 1250px;
+    max-width: 95%;
     position: relative;
-    overflow: hidden;
+    overflow-x: auto;
 }
 
 .board-container::before {
@@ -91,19 +92,21 @@ header h2 span {
 }
 
 .board-header {
-    display: flex;
+    display: grid;
+    grid-template-columns: 560px 140px 140px 300px;
+    gap: 15px;
     color: #6e7681;
     font-size: 0.85rem;
     font-weight: 600;
     margin-bottom: 15px;
-    padding: 0 10px;
+    padding: 0 12px;
     letter-spacing: 2px;
 }
 
-.col-name { flex: 0 0 45%; }
-.col-price { justify-content: flex-end; flex: 0 0 15%; text-align: right; }
-.col-trend { flex: 0 0 20%; text-align: center; }
-.col-diff { flex: 0 0 20%; text-align: right; }
+.col-name { text-align: left; }
+.col-price { justify-content: flex-end; text-align: right; }
+.col-trend { justify-content: center; text-align: center; }
+.col-diff { justify-content: flex-end; text-align: right; }
 
 .board {
     display: flex;
@@ -112,7 +115,9 @@ header h2 span {
 }
 
 .row {
-    display: flex;
+    display: grid;
+    grid-template-columns: 560px 140px 140px 300px;
+    gap: 15px;
     background: rgba(0, 0, 0, 0.4);
     padding: 8px 12px;
     border-radius: 8px;
