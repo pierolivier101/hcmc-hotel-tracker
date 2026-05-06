@@ -4,6 +4,8 @@ import random
 import urllib.request
 import urllib.parse
 from datetime import datetime
+import re
+from playwright.sync_api import sync_playwright
 
 PRICES_FILE = "prices.json"
 
@@ -43,20 +45,44 @@ SERVICED_APARTMENTS = [
     "SAIGON DOMAINE"
 ]
 
-def fetch_real_price(hotel_name):
+def fetch_real_price(hotel_name, page=None):
     """
-    Attempt to fetch real price from Booking or Google.
-    Due to bot protections, this often fails without Playwright/Selenium or an API key.
-    We will simulate a request approach, falling back on realistic mock data if blocked.
+    Attempt to fetch real price from Google Travel Search using Playwright.
+    Converts VND to USD if successful. Returns None if it fails.
     """
+    if not page:
+        print(f"[{hotel_name}] No Playwright page provided, skipping real fetch.")
+        return None
+        
     try:
-        url = f"https://www.google.com/search?q={urllib.parse.quote(hotel_name + ' hotel price HCMC per night standard double room')}"
-        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'})
-        with urllib.request.urlopen(req, timeout=5) as response:
-            html = response.read().decode('utf-8')
-            raise ValueError("Direct scraping requires headless browser to bypass protections.")
+        query = f"{hotel_name} HCMC"
+        url = f"https://www.google.com/travel/search?q={urllib.parse.quote(query)}"
+        print(f"  -> Scraping: {hotel_name} ...", end=" ")
+        
+        page.goto(url, wait_until="domcontentloaded", timeout=15000)
+        # Wait a brief moment to allow prices to render
+        page.wait_for_timeout(1500)
+        
+        # Try to extract prices matching VND format
+        price_texts = page.locator('span[aria-label*="price"], span:has-text("VND"), span:has-text("₫")').all_inner_texts()
+        
+        for text in price_texts:
+            matches = re.findall(r'₫([\d,\.]+)', text)
+            if matches:
+                # Find the first valid price
+                for m in matches:
+                    clean_str = m.replace(',', '').replace('.', '')
+                    if clean_str.isdigit():
+                        vnd_price = int(clean_str)
+                        if vnd_price > 100000:  # sanity check (more than 100k VND)
+                            usd_price = int(round(vnd_price / 25450))
+                            print(f"Success! (${usd_price})")
+                            return usd_price
+                            
+        print("No valid price found.")
+        return None
     except Exception as e:
-        print(f"[{hotel_name}] Direct scrape blocked or failed. Using algorithmic estimation based on market.")
+        print(f"Failed. ({str(e).splitlines()[0]})")
         return None
 
 def update_prices():
@@ -149,42 +175,50 @@ def update_prices():
         "SAIGON DOMAINE": 160
     }
     
-    for item in HOTELS + SERVICED_APARTMENTS:
-        item_type = "hotel" if item in HOTELS else "apartment"
-        real_price = fetch_real_price(item)
-        
-        # Determine current price
-        if real_price is not None:
-            current_price = real_price
-        else:
-            # Fallback to realistic fluctuation (-$20 to +$20) to demonstrate the UP/DOWN logic daily
-            prev_price = prev_data.get(item, base_prices.get(item, 150))
-            change = random.choice([-20, -15, -10, -5, 0, 0, 0, 5, 10, 15, 20])
-            current_price = max(60, prev_price + change) # Ensure price doesn't go below $60
+    with sync_playwright() as p:
+        print("Launching headless browser...")
+        browser = p.chromium.launch(headless=True)
+        context = browser.new_context(user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
+        page = context.new_page()
+
+        for item in HOTELS + SERVICED_APARTMENTS:
+            item_type = "hotel" if item in HOTELS else "apartment"
+            real_price = fetch_real_price(item, page=page)
             
-        # Calculate trend
-        old_price = prev_data.get(item, current_price)
-        diff = current_price - old_price
-        
-        # Calculate Weekly Variance (Average of recent 7 days - Average of previous 7 days)
-        avg_rec_price = avg_recent.get(item, current_price)
-        avg_prv_price = avg_prev.get(item, avg_rec_price) 
-        diff_7d = avg_rec_price - avg_prv_price
-        
-        trend = "FLAT"
-        if diff > 0:
-            trend = "UP"
-        elif diff < 0:
-            trend = "DOWN"
+            # Determine current price
+            if real_price is not None:
+                current_price = real_price
+            else:
+                # Fallback to realistic fluctuation (-$20 to +$20) to demonstrate the UP/DOWN logic daily
+                prev_price = prev_data.get(item, base_prices.get(item, 150))
+                change = random.choice([-20, -15, -10, -5, 0, 0, 0, 5, 10, 15, 20])
+                current_price = max(60, prev_price + change) # Ensure price doesn't go below $60
+                
+            # Calculate trend
+            old_price = prev_data.get(item, current_price)
+            diff = current_price - old_price
             
-        new_data.append({
-            "name": item,
-            "price": current_price,
-            "trend": trend,
-            "diff": diff,
-            "diff_7d": round(diff_7d),
-            "type": item_type
-        })
+            # Calculate Weekly Variance (Average of recent 7 days - Average of previous 7 days)
+            avg_rec_price = avg_recent.get(item, current_price)
+            avg_prv_price = avg_prev.get(item, avg_rec_price) 
+            diff_7d = avg_rec_price - avg_prv_price
+            
+            trend = "FLAT"
+            if diff > 0:
+                trend = "UP"
+            elif diff < 0:
+                trend = "DOWN"
+                
+            new_data.append({
+                "name": item,
+                "price": current_price,
+                "trend": trend,
+                "diff": diff,
+                "diff_7d": round(diff_7d),
+                "type": item_type
+            })
+            
+        browser.close()
         
     # Save new prices
     with open(PRICES_FILE, "w") as f:
