@@ -21,8 +21,8 @@ body {
     border-radius: 16px;
     padding: 30px 50px 50px;
     box-shadow: 0 40px 80px rgba(0,0,0,0.8), inset 0 0 40px rgba(0,0,0,0.5);
-    width: 1250px;
-    max-width: 95%;
+    width: 100%;
+    max-width: 1250px;
     position: relative;
     overflow-x: auto;
 }
@@ -93,7 +93,7 @@ header h2 span {
 
 .board-header {
     display: grid;
-    grid-template-columns: 560px 140px 140px 300px;
+    grid-template-columns: 3fr 1fr 1.2fr 1.5fr 1.8fr 1.3fr;
     gap: 15px;
     color: #6e7681;
     font-size: 0.85rem;
@@ -107,6 +107,41 @@ header h2 span {
 .col-price { justify-content: flex-end; text-align: right; }
 .col-trend { justify-content: center; text-align: center; }
 .col-diff { justify-content: flex-end; text-align: right; }
+.col-avg-diff { justify-content: flex-end; text-align: right; }
+.col-pct { justify-content: flex-end; text-align: right; }
+
+.controls {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.controls label {
+    font-family: 'Oswald', sans-serif;
+    color: #8b949e;
+    letter-spacing: 2px;
+    margin-right: 10px;
+    font-size: 1.1rem;
+}
+
+.controls input {
+    background: #0d1117;
+    border: 1px solid #00f0ff;
+    color: #00f0ff;
+    padding: 5px 15px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.2rem;
+    border-radius: 4px;
+    width: 80px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.controls input:focus {
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+    background: #161b22;
+}
 
 .board {
     display: flex;
@@ -116,7 +151,7 @@ header h2 span {
 
 .row {
     display: grid;
-    grid-template-columns: 560px 140px 140px 300px;
+    grid-template-columns: 3fr 1fr 1.2fr 1.5fr 1.8fr 1.3fr;
     gap: 15px;
     background: rgba(0, 0, 0, 0.4);
     padding: 8px 12px;
@@ -132,62 +167,35 @@ header h2 span {
     border-color: rgba(255, 255, 255, 0.1);
 }
 
-.word {
-    display: flex;
-    gap: 3px;
-}
-
-.flap {
-    width: 25px;
-    height: 40px;
-    background: linear-gradient(180deg, #181d24 0%, #0d1117 100%);
-    color: #e6edf3;
+.row > div {
     font-family: 'Oswald', sans-serif;
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     font-weight: 500;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 4px;
-    position: relative;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255,255,255,0.1);
-    border: 1px solid #000;
-    overflow: hidden;
-    perspective: 200px;
 }
 
-/* Simulated split line */
-.flap::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background-color: #000;
-    transform: translateY(-50%);
-    z-index: 10;
-    box-shadow: 0 1px 0 rgba(255,255,255,0.1);
-}
-
-.up .flap { 
+.up { 
     color: #39ff14; 
     text-shadow: 0 0 6px rgba(57, 255, 20, 0.4);
 }
-.down .flap { 
+.down { 
     color: #ff073a;
     text-shadow: 0 0 6px rgba(255, 7, 58, 0.4);
 }
-.flat .flap { 
+.flat { 
     color: #8b949e; 
 }
 
-.type-hotel .flap {
+.type-hotel {
     color: #39ff14; /* Green */
     text-shadow: 0 0 6px rgba(57, 255, 20, 0.4);
 }
 
-.type-apartment .flap {
+.type-apartment {
     color: #00f0ff; /* Blue */
     text-shadow: 0 0 6px rgba(0, 240, 255, 0.4);
+}
+
+.stale {
+    color: #ff4444 !important; /* Red */
+    text-shadow: 0 0 6px rgba(255, 68, 68, 0.4) !important;
 }

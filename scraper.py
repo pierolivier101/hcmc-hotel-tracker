@@ -59,24 +59,36 @@ def fetch_real_price(hotel_name, page=None):
         url = f"https://www.google.com/travel/search?q={urllib.parse.quote(query)}"
         print(f"  -> Scraping: {hotel_name} ...", end=" ")
         
-        page.goto(url, wait_until="domcontentloaded", timeout=15000)
+        page.goto(url, wait_until="domcontentloaded", timeout=30000)
         # Wait a brief moment to allow prices to render
-        page.wait_for_timeout(1500)
+        page.wait_for_timeout(3500)
         
-        # Try to extract prices matching VND format
-        price_texts = page.locator('span[aria-label*="price"], span:has-text("VND"), span:has-text("₫")').all_inner_texts()
+        # Try to extract prices matching VND or USD format
+        price_texts = page.locator('span[aria-label*="price"], span:has-text("VND"), span:has-text("₫"), span:has-text("$")').all_inner_texts()
         
         for text in price_texts:
-            matches = re.findall(r'₫([\d,\.]+)', text)
-            if matches:
+            # Check VND first
+            matches_vnd = re.findall(r'₫([\d,\.]+)', text)
+            if matches_vnd:
                 # Find the first valid price
-                for m in matches:
+                for m in matches_vnd:
                     clean_str = m.replace(',', '').replace('.', '')
                     if clean_str.isdigit():
                         vnd_price = int(clean_str)
                         if vnd_price > 100000:  # sanity check (more than 100k VND)
                             usd_price = int(round(vnd_price / 25450))
                             print(f"Success! (${usd_price})")
+                            return usd_price
+                            
+            # Check USD if no VND match found
+            matches_usd = re.findall(r'\$([\d,\.]+)', text)
+            if matches_usd:
+                for m in matches_usd:
+                    clean_str = m.replace(',', '').replace('.', '')
+                    if clean_str.isdigit():
+                        usd_price = int(clean_str)
+                        if usd_price > 20:  # sanity check (more than $20)
+                            print(f"Success! (${usd_price} directly)")
                             return usd_price
                             
         print("No valid price found.")
@@ -123,6 +135,8 @@ def update_prices():
         prev_7_days = []
         recent_7_days = last_14_days
         
+    last_30_days = hist_past[-30:] if len(hist_past) > 0 else []
+        
     def get_averages(day_list):
         avg_dict = {}
         if not day_list: return avg_dict
@@ -138,6 +152,7 @@ def update_prices():
         
     avg_prev = get_averages(prev_7_days)
     avg_recent = get_averages(recent_7_days)
+    avg_30d = get_averages(last_30_days)
                 
     new_data = []
     
@@ -185,14 +200,14 @@ def update_prices():
             item_type = "hotel" if item in HOTELS else "apartment"
             real_price = fetch_real_price(item, page=page)
             
+            is_stale = False
             # Determine current price
             if real_price is not None:
                 current_price = real_price
             else:
-                # Fallback to realistic fluctuation (-$20 to +$20) to demonstrate the UP/DOWN logic daily
-                prev_price = prev_data.get(item, base_prices.get(item, 150))
-                change = random.choice([-20, -15, -10, -5, 0, 0, 0, 5, 10, 15, 20])
-                current_price = max(60, prev_price + change) # Ensure price doesn't go below $60
+                # Fallback to EXACT previous price and mark as stale
+                current_price = prev_data.get(item, base_prices.get(item, 150))
+                is_stale = True
                 
             # Calculate trend
             old_price = prev_data.get(item, current_price)
@@ -215,7 +230,9 @@ def update_prices():
                 "trend": trend,
                 "diff": diff,
                 "diff_7d": round(diff_7d),
-                "type": item_type
+                "avg_30d": round(avg_30d.get(item, current_price)),
+                "type": item_type,
+                "is_stale": is_stale
             })
             
         browser.close()
@@ -256,8 +273,8 @@ def update_prices():
     today = datetime.now().date()
     last_day = calendar.monthrange(today.year, today.month)[1]
     
-    if today.day == last_day:
-        print(f"[{today_str}] Last day of the month detected. Generating & sending report...")
+    if today.day == 15 or today.day == last_day:
+        print(f"[{today_str}] Report day (15th or end of month) detected. Generating & sending report...")
         try:
             subprocess.run(["python", "monthly_reporter.py"])
         except Exception as e:

@@ -15,7 +15,7 @@ SENDER_PASSWORD = os.getenv("SENDER_PASSWORD")
 RECIPIENT_EMAIL = os.getenv("RECIPIENT_EMAIL")
 
 HISTORY_FILE = "history.json"
-REPORT_NAME = f"Monthly_Price_Report_{datetime.now().strftime('%Y_%B')}.xlsx"
+REPORT_NAME = f"BiWeekly_Price_Report_{datetime.now().strftime('%Y_%m_%d')}.xlsx"
 
 def process_history_data():
     if not os.path.exists(HISTORY_FILE):
@@ -67,12 +67,12 @@ def process_history_data():
 def create_excel_report(stats):
     wb = Workbook()
     ws = wb.active
-    ws.title = "Monthly Statistics"
+    ws.title = "Bi-Weekly Statistics"
     
     # Headers
     headers = [
         "Property Name", "Type", "Start Price (USD)", "End Price (USD)", 
-        "Monthly Variation (USD)", "Min Price (USD)", "Max Price (USD)", "Avg Price (USD)"
+        "Period Variation (USD)", "Min Price (USD)", "Max Price (USD)", "Avg Price (USD)"
     ]
     
     header_fill = PatternFill("solid", fgColor="1F4E78")
@@ -116,15 +116,15 @@ def send_email(attachment_path):
         return False
         
     msg = EmailMessage()
-    msg['Subject'] = f"Monthly Hotel & Apartment Price Statistics - {datetime.now().strftime('%B %Y')}"
+    msg['Subject'] = f"Bi-Weekly Hotel & Apartment Price Statistics - {datetime.now().strftime('%d %B %Y')}"
     msg['From'] = SENDER_EMAIL
     msg['To'] = RECIPIENT_EMAIL
     
     content = f"""
     Hello,
     
-    Please find attached the automated monthly statistics report for the HCMC properties.
-    This report contains the price variations (increases and decreases) tracked over the course of the month.
+    Please find attached the automated bi-weekly statistics report for the HCMC properties.
+    This report contains the price variations (increases and decreases) tracked over the current period.
     
     Generated automatically by your system.
     """

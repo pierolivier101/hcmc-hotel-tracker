@@ -1,8 +1,3 @@
-const ALPHABET = " ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$-.+↑↓";
-
-const CHAR_FLAP_DELAY = 40; // ms
-const MAX_FLAPS = 20;
-
 async function fetchPrices() {
     try {
         // Cache buster for local fetch
@@ -14,95 +9,106 @@ async function fetchPrices() {
         const hotels = data.filter(d => d.type === 'hotel');
         const sortedData = [...apartments, ...hotels];
         
+        window.pricesData = sortedData;
         renderBoard(sortedData);
     } catch (e) {
         console.error("Failed to fetch prices:", e);
     }
 }
 
+document.getElementById('riverside-price').addEventListener('change', () => {
+    if (window.pricesData) {
+        renderBoard(window.pricesData);
+    }
+});
+
 function renderBoard(data) {
     const board = document.getElementById('board');
     if (board) board.innerHTML = ''; // clear
+
+    const riversidePrice = parseFloat(document.getElementById('riverside-price').value) || 100;
 
     data.forEach(item => {
         const row = document.createElement('div');
         row.className = 'row';
 
-        // Formatting
-        const namePad = padString(item.name.toUpperCase(), 20);
-        const priceStr = "$" + item.price;
-        const pricePad = padString(priceStr, 5, true);
+        // 1. PROPERTY
+        const nameDiv = document.createElement('div');
+        nameDiv.className = 'col-name type-' + item.type;
+        nameDiv.textContent = item.name.toUpperCase();
+        row.appendChild(nameDiv);
 
-        // DAILY VARIANCE column: show absolute value (valeur absolue)
+        // 2. PRICE/NIGHT
+        const priceDiv = document.createElement('div');
+        priceDiv.className = 'col-price' + (item.is_stale ? ' stale' : '');
+        priceDiv.textContent = "$" + item.price;
+        row.appendChild(priceDiv);
+
+        // 3. DAILY VARIANCE
         const dailyStr = item.diff === 0 ? "0" : String(Math.abs(item.diff));
-        const statusPad = padString(dailyStr, 5, true);
+        const dailyDiv = document.createElement('div');
+        dailyDiv.className = 'col-trend ' + item.trend.toLowerCase();
+        dailyDiv.textContent = dailyStr;
+        row.appendChild(dailyDiv);
 
-        // WEEKLY VARIANCE column: arrow symbol + 7-day average absolute value
-        let weeklyStr;
+        // 4. WEEKLY VARIANCE
         let diff7d = item.diff_7d || 0;
-        
         let trend7d = "flat";
+        let weeklyStr = "STABLE";
         if (diff7d > 0) {
             weeklyStr = "↑ " + diff7d + " USD";
             trend7d = "up";
         } else if (diff7d < 0) {
             weeklyStr = "↓ " + Math.abs(diff7d) + " USD";
             trend7d = "down";
-        } else {
-            weeklyStr = "STABLE";
         }
-        const variancePad = padString(weeklyStr, 11, true);
+        const weeklyDiv = document.createElement('div');
+        weeklyDiv.className = 'col-diff ' + trend7d;
+        weeklyDiv.textContent = weeklyStr;
+        row.appendChild(weeklyDiv);
 
-        // Append components
-        createWordDiv(row, namePad, 'col-name type-' + item.type);
-        createWordDiv(row, pricePad, 'col-price');
-        createWordDiv(row, statusPad, 'col-trend ' + item.trend.toLowerCase());
-        createWordDiv(row, variancePad, 'col-diff ' + trend7d);
+        // 5. VS RIVERSIDE (30D)
+        let avgDiffPctStr = "N/A";
+        let avgPctClass = "flat";
+        if (item.avg_30d && item.avg_30d > 0 && riversidePrice > 0) {
+            const avgPct = ((item.avg_30d - riversidePrice) / riversidePrice) * 100;
+            if (avgPct > 0) {
+                avgDiffPctStr = "+" + avgPct.toFixed(1) + "%";
+                avgPctClass = "up";
+            } else if (avgPct < 0) {
+                avgDiffPctStr = avgPct.toFixed(1) + "%";
+                avgPctClass = "down";
+            } else {
+                avgDiffPctStr = "0.0%";
+            }
+        }
+        const avgDiv = document.createElement('div');
+        avgDiv.className = 'col-avg-diff ' + avgPctClass;
+        avgDiv.textContent = avgDiffPctStr;
+        row.appendChild(avgDiv);
+
+        // 6. VS RIVERSIDE %
+        let diffPctStr = "N/A";
+        let pctClass = "flat";
+        if (item.price > 0 && riversidePrice > 0) {
+            const pct = ((item.price - riversidePrice) / riversidePrice) * 100;
+            if (pct > 0) {
+                diffPctStr = "+" + pct.toFixed(1) + "%";
+                pctClass = "up";
+            } else if (pct < 0) {
+                diffPctStr = pct.toFixed(1) + "%";
+                pctClass = "down";
+            } else {
+                diffPctStr = "0.0%";
+            }
+        }
+        const pctDiv = document.createElement('div');
+        pctDiv.className = 'col-pct ' + pctClass;
+        pctDiv.textContent = diffPctStr;
+        row.appendChild(pctDiv);
 
         if (board) board.appendChild(row);
     });
-}
-
-function padString(str, length, alignRight = false) {
-    if (str.length > length) return str.substring(0, length);
-    if (alignRight) return str.padStart(length, ' ');
-    return str.padEnd(length, ' ');
-}
-
-function createWordDiv(rowDiv, text, classNames) {
-    const wordDiv = document.createElement('div');
-    wordDiv.className = 'word ' + classNames;
-    
-    for (let i = 0; i < text.length; i++) {
-        const flap = document.createElement('div');
-        flap.className = 'flap';
-        flap.textContent = ' ';
-        wordDiv.appendChild(flap);
-        
-        animateFlap(flap, text[i]);
-    }
-    
-    rowDiv.appendChild(wordDiv);
-}
-
-function animateFlap(element, targetChar) {
-    let currentIdx = Math.floor(Math.random() * ALPHABET.length);
-    let flips = 0;
-    const targetFlips = Math.floor(Math.random() * 15) + 10;
-    
-    const interval = setInterval(() => {
-        currentIdx = (currentIdx + 1) % ALPHABET.length;
-        element.textContent = ALPHABET[currentIdx];
-        flips++;
-        
-        if (flips >= targetFlips && ALPHABET[currentIdx] === targetChar) {
-            clearInterval(interval);
-        } else if (flips > targetFlips * 2) {
-            // Failsafe
-            element.textContent = targetChar;
-            clearInterval(interval);
-        }
-    }, CHAR_FLAP_DELAY);
 }
 
 // init

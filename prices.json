@@ -1,242 +1,302 @@
 [
     {
         "name": "CARAVELLE SAIGON",
-        "price": 159,
-        "trend": "FLAT",
-        "diff": 0,
-        "diff_7d": 0,
-        "type": "hotel"
+        "price": 167,
+        "trend": "UP",
+        "diff": 86,
+        "diff_7d": -17,
+        "avg_30d": 115,
+        "type": "hotel",
+        "is_stale": false
     },
     {
         "name": "REX HOTEL",
-        "price": 100,
-        "trend": "FLAT",
-        "diff": 0,
-        "diff_7d": 0,
-        "type": "hotel"
+        "price": 101,
+        "trend": "UP",
+        "diff": 14,
+        "diff_7d": 37,
+        "avg_30d": 103,
+        "type": "hotel",
+        "is_stale": false
     },
     {
         "name": "PARK HYATT SAIGON",
-        "price": 332,
-        "trend": "FLAT",
-        "diff": 0,
-        "diff_7d": 0,
-        "type": "hotel"
+        "price": 295,
+        "trend": "UP",
+        "diff": 59,
+        "diff_7d": -34,
+        "avg_30d": 265,
+        "type": "hotel",
+        "is_stale": false
     },
     {
         "name": "THE REVERIE SAIGON",
-        "price": 325,
-        "trend": "DOWN",
-        "diff": -20,
-        "diff_7d": 0,
-        "type": "hotel"
+        "price": 203,
+        "trend": "FLAT",
+        "diff": 0,
+        "diff_7d": -20,
+        "avg_30d": 312,
+        "type": "hotel",
+        "is_stale": true
     },
     {
         "name": "HOTEL MAJESTIC",
-        "price": 107,
+        "price": 110,
         "trend": "FLAT",
         "diff": 0,
-        "diff_7d": 0,
-        "type": "hotel"
+        "diff_7d": -13,
+        "avg_30d": 134,
+        "type": "hotel",
+        "is_stale": false
     },
     {
         "name": "INTERCONTINENTAL",
-        "price": 158,
-        "trend": "FLAT",
-        "diff": 0,
-        "diff_7d": 0,
-        "type": "hotel"
+        "price": 12,
+        "trend": "DOWN",
+        "diff": -185,
+        "diff_7d": -19,
+        "avg_30d": 218,
+        "type": "hotel",
+        "is_stale": false
     },
     {
         "name": "SOFITEL SAIGON",
-        "price": 180,
-        "trend": "UP",
-        "diff": 5,
-        "diff_7d": 0,
-        "type": "hotel"
+        "price": 185,
+        "trend": "FLAT",
+        "diff": 0,
+        "diff_7d": -32,
+        "avg_30d": 187,
+        "type": "hotel",
+        "is_stale": true
     },
     {
         "name": "PULLMAN SAIGON",
         "price": 175,
-        "trend": "UP",
-        "diff": 10,
-        "diff_7d": 0,
-        "type": "hotel"
+        "trend": "FLAT",
+        "diff": 0,
+        "diff_7d": -1,
+        "avg_30d": 174,
+        "type": "hotel",
+        "is_stale": true
     },
     {
         "name": "NEW WORLD HOTEL",
-        "price": 158,
-        "trend": "FLAT",
-        "diff": 0,
-        "diff_7d": 0,
-        "type": "hotel"
+        "price": 81,
+        "trend": "DOWN",
+        "diff": -121,
+        "diff_7d": -19,
+        "avg_30d": 103,
+        "type": "hotel",
+        "is_stale": false
     },
     {
         "name": "LOTTE HOTEL SAIGON",
-        "price": 150,
-        "trend": "DOWN",
-        "diff": -15,
-        "diff_7d": 0,
-        "type": "hotel"
+        "price": 135,
+        "trend": "FLAT",
+        "diff": 0,
+        "diff_7d": 64,
+        "avg_30d": 116,
+        "type": "hotel",
+        "is_stale": true
     },
     {
         "name": "GRAND HOTEL SAIGON",
-        "price": 106,
-        "trend": "UP",
-        "diff": 1,
-        "diff_7d": 0,
-        "type": "hotel"
+        "price": 105,
+        "trend": "FLAT",
+        "diff": 0,
+        "diff_7d": -21,
+        "avg_30d": 101,
+        "type": "hotel",
+        "is_stale": false
     },
     {
         "name": "THE MYST DONG KHOI",
-        "price": 193,
-        "trend": "FLAT",
-        "diff": 0,
-        "diff_7d": 0,
-        "type": "hotel"
+        "price": 201,
+        "trend": "UP",
+        "diff": 4,
+        "diff_7d": 59,
+        "avg_30d": 141,
+        "type": "hotel",
+        "is_stale": false
     },
     {
         "name": "LIBERTY CENTRAL",
         "price": 12,
         "trend": "FLAT",
         "diff": 0,
-        "diff_7d": 0,
-        "type": "hotel"
+        "diff_7d": -28,
+        "avg_30d": 76,
+        "type": "hotel",
+        "is_stale": false
     },
     {
         "name": "SILVERLAND YEN",
-        "price": 115,
-        "trend": "FLAT",
-        "diff": 0,
+        "price": 82,
+        "trend": "DOWN",
+        "diff": -115,
         "diff_7d": 0,
-        "type": "hotel"
+        "avg_30d": 100,
+        "type": "hotel",
+        "is_stale": false
     },
     {
         "name": "FUSION ORIGINAL",
-        "price": 12,
-        "trend": "FLAT",
-        "diff": 0,
-        "diff_7d": 0,
-        "type": "hotel"
+        "price": 81,
+        "trend": "DOWN",
+        "diff": -155,
+        "diff_7d": -77,
+        "avg_30d": 118,
+        "type": "hotel",
+        "is_stale": false
     },
     {
         "name": "HOTEL DES ARTS",
-        "price": 245,
-        "trend": "DOWN",
-        "diff": -10,
-        "diff_7d": 0,
-        "type": "hotel"
+        "price": 236,
+        "trend": "UP",
+        "diff": 216,
+        "diff_7d": 12,
+        "avg_30d": 236,
+        "type": "hotel",
+        "is_stale": false
     },
     {
         "name": "MAI HOUSE SAIGON",
-        "price": 117,
+        "price": 129,
         "trend": "FLAT",
         "diff": 0,
-        "diff_7d": 0,
-        "type": "hotel"
+        "diff_7d": -29,
+        "avg_30d": 130,
+        "type": "hotel",
+        "is_stale": false
     },
     {
         "name": "RENAISSANCE RIVERSDE",
-        "price": 12,
-        "trend": "FLAT",
-        "diff": 0,
-        "diff_7d": 0,
-        "type": "hotel"
+        "price": 33,
+        "trend": "DOWN",
+        "diff": -164,
+        "diff_7d": -55,
+        "avg_30d": 87,
+        "type": "hotel",
+        "is_stale": false
     },
     {
         "name": "SHERATON SAIGON",
         "price": 240,
-        "trend": "DOWN",
-        "diff": -5,
-        "diff_7d": 0,
-        "type": "hotel"
+        "trend": "FLAT",
+        "diff": 0,
+        "diff_7d": 51,
+        "avg_30d": 214,
+        "type": "hotel",
+        "is_stale": true
     },
     {
         "name": "LE MERIDIEN SAIGON",
-        "price": 195,
-        "trend": "FLAT",
-        "diff": 0,
-        "diff_7d": 0,
-        "type": "hotel"
+        "price": 202,
+        "trend": "UP",
+        "diff": 18,
+        "diff_7d": 36,
+        "avg_30d": 121,
+        "type": "hotel",
+        "is_stale": false
     },
     {
         "name": "SOMERSET CHANCELLOR",
-        "price": 12,
-        "trend": "FLAT",
-        "diff": 0,
-        "diff_7d": 0,
-        "type": "apartment"
+        "price": 236,
+        "trend": "UP",
+        "diff": 39,
+        "diff_7d": -49,
+        "avg_30d": 102,
+        "type": "apartment",
+        "is_stale": false
     },
     {
         "name": "SOMERSET HCMC",
-        "price": 114,
-        "trend": "FLAT",
-        "diff": 0,
-        "diff_7d": 0,
-        "type": "apartment"
+        "price": 236,
+        "trend": "UP",
+        "diff": 7,
+        "diff_7d": -6,
+        "avg_30d": 124,
+        "type": "apartment",
+        "is_stale": false
     },
     {
         "name": "ASCOTT WATERFRONT",
-        "price": 275,
-        "trend": "DOWN",
-        "diff": -15,
-        "diff_7d": 0,
-        "type": "apartment"
+        "price": 255,
+        "trend": "FLAT",
+        "diff": 0,
+        "diff_7d": 8,
+        "avg_30d": 252,
+        "type": "apartment",
+        "is_stale": true
     },
     {
         "name": "OAKWOOD RESIDENCE",
         "price": 240,
-        "trend": "UP",
-        "diff": 15,
-        "diff_7d": 0,
-        "type": "apartment"
+        "trend": "FLAT",
+        "diff": 0,
+        "diff_7d": 43,
+        "avg_30d": 198,
+        "type": "apartment",
+        "is_stale": true
     },
     {
         "name": "SEDONA SUITES",
-        "price": 137,
-        "trend": "FLAT",
-        "diff": 0,
-        "diff_7d": 0,
-        "type": "apartment"
+        "price": 236,
+        "trend": "UP",
+        "diff": 189,
+        "diff_7d": -60,
+        "avg_30d": 122,
+        "type": "apartment",
+        "is_stale": false
     },
     {
         "name": "SHERWOOD RESIDENCE",
-        "price": 86,
-        "trend": "FLAT",
-        "diff": 0,
-        "diff_7d": 0,
-        "type": "apartment"
+        "price": 201,
+        "trend": "UP",
+        "diff": 17,
+        "diff_7d": -39,
+        "avg_30d": 101,
+        "type": "apartment",
+        "is_stale": false
     },
     {
         "name": "SILA URBAN LIVING",
-        "price": 82,
+        "price": 172,
         "trend": "FLAT",
         "diff": 0,
-        "diff_7d": 0,
-        "type": "apartment"
+        "diff_7d": -38,
+        "avg_30d": 122,
+        "type": "apartment",
+        "is_stale": false
     },
     {
         "name": "INTERCON RESIDENCES",
         "price": 215,
         "trend": "FLAT",
         "diff": 0,
-        "diff_7d": 0,
-        "type": "apartment"
+        "diff_7d": 36,
+        "avg_30d": 196,
+        "type": "apartment",
+        "is_stale": true
     },
     {
         "name": "CAPRI BY FRASER",
         "price": 210,
-        "trend": "UP",
-        "diff": 20,
-        "diff_7d": 0,
-        "type": "apartment"
+        "trend": "FLAT",
+        "diff": 0,
+        "diff_7d": 43,
+        "avg_30d": 198,
+        "type": "apartment",
+        "is_stale": true
     },
     {
         "name": "SAIGON DOMAINE",
-        "price": 110,
-        "trend": "DOWN",
-        "diff": -15,
-        "diff_7d": 0,
-        "type": "apartment"
+        "price": 90,
+        "trend": "FLAT",
+        "diff": 0,
+        "diff_7d": 1,
+        "avg_30d": 116,
+        "type": "apartment",
+        "is_stale": true
     }
 ]
